@@ -35,7 +35,7 @@ int main() {
 //  myDice = nullptr;
 //  return 0;
 
-  int32_t* results = crapsGame(100, 5);
+  int32_t* results = crapsGame(100000000, 5);
   for(int i = 0; i < 6; ++i) {
     cout << results[i] << endl;
   }
@@ -43,5 +43,5 @@ int main() {
   for(int i = 0; i < 6; ++i) {
   total += results[i];
   }
-  cout << total << endl;
+  cout << total / 1000000 << endl;
 }

@@ -48,9 +48,6 @@ int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
   int32_t* rawResults = new int32_t[turnsToMap + 2];
   for (int i = 0; i < numOfGames;) {
     int32_t roll = crapsDice1.roll() + crapsDice2.roll();
-    if(turnCounter < 1){
-      target = 8;
-    }
     if(turnCounter > turnsToMap){
       turnCounter = (turnsToMap + 1);
     }
@@ -65,6 +62,9 @@ int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
     if(crapsTurn(roll, turnCounter, target) == 2) {
     turnCounter = 0;
     ++i;
+    }
+    if(turnCounter == 0){
+      target = roll;
     }
   }
   return rawResults;
