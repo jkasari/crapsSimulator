@@ -41,12 +41,13 @@ int32_t crapsTurn(int32_t roll, int32_t turnCounter, int32_t target) {
  * decided by the number of turns you want to map.
  */
 int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
-  dice crapsDice(12);
+  dice crapsDice1(6);
+  dice crapsDice2(6);
   int32_t target = 0;
   int32_t turnCounter = 0;
   int32_t* rawResults = new int32_t[turnsToMap + 2];
   for (int i = 0; i < numOfGames;) {
-    int32_t roll = crapsDice.roll();
+    int32_t roll = crapsDice1.roll() + crapsDice2.roll();
     if(turnCounter < 1){
       target = 8;
     }
