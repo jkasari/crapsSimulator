@@ -42,13 +42,28 @@ int32_t crapsTurn(int32_t roll, int32_t turnCounter, int32_t target) {
  */
 int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
   dice crapsDice(12);
-  int32_t* rawResults = new int32_t[turnsToMap + 1];
-  for (int i = 0; i < numOfGames; ++i) {
-    int32_t firstRoll = crapsDice.roll();
-    if (firstRoll == 7 || firstRoll == 11) {
-      rawResults[i % turnsToMap] += 1;
-    } else {
-      rawResults[turnsToMap] += 1;
+  int32_t target = 0;
+  int32_t turnCounter = 0;
+  int32_t* rawResults = new int32_t[turnsToMap + 2];
+  for (int i = 0; i < numOfGames;) {
+    int32_t roll = crapsDice.roll();
+    if(turnCounter < 1){
+      target = 8;
+    }
+    if(turnCounter > turnsToMap){
+      turnCounter = (turnsToMap + 1);
+    }
+    if(crapsTurn(roll, turnCounter, target) == 0) {
+    ++turnCounter;
+    }
+    if(crapsTurn(roll, turnCounter, target) == 1) {
+    rawResults[turnCounter] +=1;
+    turnCounter = 0;
+    ++i;
+    }
+    if(crapsTurn(roll, turnCounter, target) == 2) {
+    turnCounter = 0;
+    ++i;
     }
   }
   return rawResults;

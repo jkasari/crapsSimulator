@@ -35,11 +35,13 @@ int main() {
 //  myDice = nullptr;
 //  return 0;
 
-//  int32_t* results = crapsGame(50, 5);
-//  for(int i = 0; i < 6; ++i) {
-//    cout << results[i] << endl;
-//  }
-
-int result = crapsTurn(7, 4, 5);
-cout << result << endl;
+  int32_t* results = crapsGame(100, 5);
+  for(int i = 0; i < 6; ++i) {
+    cout << results[i] << endl;
+  }
+  int32_t total = 0;
+  for(int i = 0; i < 6; ++i) {
+  total += results[i];
+  }
+  cout << total << endl;
 }
