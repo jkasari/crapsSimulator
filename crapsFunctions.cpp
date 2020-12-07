@@ -54,17 +54,20 @@ int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
     if(turnCounter > turnsToMap){
       turnCounter = (turnsToMap + 1);
     }
+    if(crapsTurn(roll, turnCounter, target) == 2) {
+    turnCounter = 0;
+    ++i;
+    continue;
+    }
     if(crapsTurn(roll, turnCounter, target) == 1) {
     rawResults[turnCounter] +=1;
     turnCounter = 0;
     ++i;
-    }
-    if(crapsTurn(roll, turnCounter, target) == 2) {
-    turnCounter = 0;
-    ++i;
+    continue;
     }
     if(crapsTurn(roll, turnCounter, target) == 0) {
     ++turnCounter;
+    continue;
     }
   }
   return rawResults;
