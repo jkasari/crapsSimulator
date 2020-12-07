@@ -35,13 +35,13 @@ int main() {
 //  myDice = nullptr;
 //  return 0;
 
-  int32_t* results = crapsGame(10000, 5);
-  for(int i = 0; i < 6; ++i) {
-    cout << results[i] / 100 << endl;
+  int32_t* results = crapsGame(1000000, 10);
+  for(int i = 0; i < 11; ++i) {
+  cout << results[i] / 10000 << "%" << endl;
   }
   int32_t total = 0;
-  for(int i = 0; i < 6; ++i) {
+  for(int i = 0; i < 11; ++i) {
   total += results[i];
   }
-  cout << total / 100 << endl;
+  cout << total / 10000 << "%" << endl;
 }
