@@ -37,7 +37,7 @@ int main() {
 
   int32_t* results = crapsGame(10000, 5);
   for(int i = 0; i < 6; ++i) {
-    cout << results[i] << endl;
+    cout << results[i] / 100 << endl;
   }
   int32_t total = 0;
   for(int i = 0; i < 6; ++i) {
