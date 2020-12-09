@@ -35,13 +35,18 @@ int main() {
 //  myDice = nullptr;
 //  return 0;
 
-  int32_t* results = crapsGame(1000000, 10);
+  const uint32_t numOfGames = 100000;
+
+  uint32_t* results = crapsGame(numOfGames, 10);
   for(int i = 0; i < 11; ++i) {
-    cout << results[i] / 10000 << "%" << endl;
+    cout << static_cast<double>(results[i]) / numOfGames * 100 << "%" << endl;
   }
-  int32_t total = 0;
+  uint32_t total = 0;
   for(int i = 0; i < 11; ++i) {
     total += results[i];
   }
-  cout << total / 10000 << "%" << endl;
+  cout << static_cast<double>(total) / numOfGames * 100 << "%" << endl;
+
+  delete[] results;
+  results = nullptr;
 }

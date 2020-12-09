@@ -5,34 +5,43 @@
  */
 class dice {
  public:
-  dice(uint32_t sides) { this->sides = sides; }
-  uint32_t roll() { return (rand() % sides) + 1; }
+  dice(const uint32_t sides) { this->sides = sides; }
+  uint32_t roll() const { return (rand() % sides) + 1; }
 
  private:
   uint32_t sides;
 };
 
+enum class TurnOutcome {
+  Continue,
+  Win,
+  Lose,
+};
+
 /**
- * takes a dice roll a counter number, and a target. It then returns a 1 if you
- * won, a 0 to continue to the next turn or a 2 if you lost.
+ * simulates the first turn of a craps game.
  */
-int32_t crapsTurn(int32_t roll, int32_t turnCounter, int32_t target) {
-  if (turnCounter == 0) {
-    if (roll == 2 || roll == 3 || roll == 12) {
-      return 2;
-    } else if (roll == 7 || roll == 11) {
-      return 1;
-    }
+TurnOutcome firstTurn(const uint32_t roll) {
+  switch (roll) {
+    case 2:
+    case 3:
+    case 12:
+      return TurnOutcome::Lose;
+    case 7:
+    case 11:
+      return TurnOutcome::Win;
+    default:
+      return TurnOutcome::Continue;
   }
-  if (turnCounter != 0) {
-    if (roll == target) {
-      return 1;
-    }
-    if (roll == 7) {
-      return 2;
-    }
+}
+
+TurnOutcome subsequentTurn(const uint32_t roll, const uint32_t target) {
+  if (roll == 7) {
+    return TurnOutcome::Lose;
+  } else if (roll == target) {
+    return TurnOutcome::Win;
   }
-  return 0;
+  return TurnOutcome::Continue;
 }
 
 /**
@@ -40,39 +49,33 @@ int32_t crapsTurn(int32_t roll, int32_t turnCounter, int32_t target) {
  * to simulate. it then returns the results in a int arr. This arr size is
  * decided by the number of turns you want to map.
  */
-int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
-  dice crapsDice1(6);
-  dice crapsDice2(6);
-  int32_t target = 0;
-  int32_t turnCounter = 0;
-  int32_t* rawResults = new int32_t[turnsToMap + 1];
-  for (int i = 0; i < numOfGames;) {
-    int32_t roll = crapsDice1.roll() + crapsDice2.roll();
-    if (turnCounter == 0) {
-      target = roll;
+uint32_t* crapsGame(const uint32_t numOfGames, const uint32_t turnsToMap) {
+  const dice crapsDice1(6);
+  const dice crapsDice2(6);
+  uint32_t* rawResults = new uint32_t[turnsToMap + 1];
+
+  for (int gameNum = 0; gameNum < numOfGames; ++gameNum) {
+    uint32_t turnCounter = 0;
+    uint32_t roll = crapsDice1.roll() + crapsDice2.roll();
+    TurnOutcome outcome = firstTurn(roll);
+
+    if (outcome == TurnOutcome::Win) {
+      rawResults[0] += 1;
     }
-    if (turnCounter > turnsToMap) {
-      turnCounter = (turnsToMap);
-    }
-    if (crapsTurn(roll, turnCounter, target) == 2) {
-      turnCounter = 0;
-      ++i;
-      continue;
-    }
-    if (crapsTurn(roll, turnCounter, target) == 1) {
-      rawResults[turnCounter] += 1;
-      turnCounter = 0;
-      ++i;
-      continue;
-    }
-    if (crapsTurn(roll, turnCounter, target) == 0) {
+
+    uint32_t target = roll;
+
+    while (outcome == TurnOutcome::Continue) {
       ++turnCounter;
-      continue;
+      roll = crapsDice1.roll() + crapsDice2.roll();
+      outcome = subsequentTurn(roll, target);
+      if (outcome == TurnOutcome::Win) {
+        rawResults[std::min(turnCounter, turnsToMap)] += 1;
+      }
     }
   }
+
   return rawResults;
-  delete[] rawResults;
-  rawResults = nullptr;
 }
 
 /**
