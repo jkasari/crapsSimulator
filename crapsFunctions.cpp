@@ -48,26 +48,26 @@ int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
   int32_t* rawResults = new int32_t[turnsToMap + 1];
   for (int i = 0; i < numOfGames;) {
     int32_t roll = crapsDice1.roll() + crapsDice2.roll();
-    if(turnCounter == 0){
+    if (turnCounter == 0) {
       target = roll;
     }
-    if(turnCounter > turnsToMap){
+    if (turnCounter > turnsToMap) {
       turnCounter = (turnsToMap);
     }
-    if(crapsTurn(roll, turnCounter, target) == 2) {
-    turnCounter = 0;
-    ++i;
-    continue;
+    if (crapsTurn(roll, turnCounter, target) == 2) {
+      turnCounter = 0;
+      ++i;
+      continue;
     }
-    if(crapsTurn(roll, turnCounter, target) == 1) {
-    rawResults[turnCounter] +=1;
-    turnCounter = 0;
-    ++i;
-    continue;
+    if (crapsTurn(roll, turnCounter, target) == 1) {
+      rawResults[turnCounter] += 1;
+      turnCounter = 0;
+      ++i;
+      continue;
     }
-    if(crapsTurn(roll, turnCounter, target) == 0) {
-    ++turnCounter;
-    continue;
+    if (crapsTurn(roll, turnCounter, target) == 0) {
+      ++turnCounter;
+      continue;
     }
   }
   return rawResults;
@@ -79,4 +79,4 @@ int32_t* crapsGame(const int32_t numOfGames, const int32_t turnsToMap) {
  * this takes the results genarated from |crapsGame| and displays them in a
  * readable format.
  */
-// void displayResults(int** rawResults)
+// void displayResults(int* rawResults, int32_t numOfGames, ) {
