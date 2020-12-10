@@ -8,6 +8,14 @@ using namespace std;
 int main(int argc, char** argv) {
   srand(time(0));
 
+  if(argc != 3) {
+    cout << "This program expects exactly two arguements" << endl;
+    cout << endl;
+    cout << " 1.) The number of turns to map." << endl;
+    cout << endl;
+    cout << " 2.) The number of games to play." << endl;
+    return 0;
+  }
 
   cout << fixed;
   cout << setprecision(4);
