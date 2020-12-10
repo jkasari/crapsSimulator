@@ -1,4 +1,6 @@
 #include <random>
+#include <iostream>
+
 
 /**
  * behives like a die, use the .roll function to generate a virtual roll.
@@ -12,11 +14,28 @@ class dice {
   uint32_t sides;
 };
 
+/**
+ * each turn will result in one of these three outcomes.
+ */
 enum class TurnOutcome {
   Continue,
   Win,
   Lose,
 };
+
+/**
+ * helps |test.cpp| understand what to do with the |TurnOutcome| class.
+ */
+std::ostream& operator<<(std::ostream& stream, const TurnOutcome& outcome) {
+  switch (outcome) {
+    case TurnOutcome::Win:
+      return stream << "Win";
+    case TurnOutcome::Lose:
+      return stream << "Lose";
+    default:
+      return stream << "Continue";
+  }
+}
 
 /**
  * simulates the first turn of a craps game.
@@ -35,6 +54,9 @@ TurnOutcome firstTurn(const uint32_t roll) {
   }
 }
 
+/**
+ * simulates any turn after the first turn in a craps game.
+ */
 TurnOutcome subsequentTurn(const uint32_t roll, const uint32_t target) {
   if (roll == 7) {
     return TurnOutcome::Lose;
