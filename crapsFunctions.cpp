@@ -99,9 +99,3 @@ uint32_t* crapsGame(const uint32_t numOfGames, const uint32_t turnsToMap) {
 
   return rawResults;
 }
-
-/**
- * this takes the results genarated from |crapsGame| and displays them in a
- * readable format.
- */
-// void displayResults(int* rawResults, int32_t numOfGames, ) {
