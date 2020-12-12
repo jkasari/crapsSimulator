@@ -1,6 +1,6 @@
 #include <random>
 #include <iostream>
-
+#include <algorithm>
 
 /**
  * behives like a die, use the .roll function to generate a virtual roll.
@@ -98,4 +98,16 @@ uint32_t* crapsGame(const uint32_t numOfGames, const uint32_t turnsToMap) {
   }
 
   return rawResults;
+}
+
+std::string comaArg(std::string argToComa) {
+  std::string argWithComas;
+  for (int i = argToComa.length(), x = 2; i >= 0; --i, ++x) {
+    if ((x % 3) == 0 && x > 3) {
+      argWithComas.push_back(',');
+    }
+    argWithComas.push_back(argToComa[i]);
+  }
+  reverse(argWithComas.begin(), argWithComas.end());
+  return argWithComas;
 }
